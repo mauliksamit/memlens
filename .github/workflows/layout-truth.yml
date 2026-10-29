@@ -1,0 +1,32 @@
+name: layout-truth
+# Prove layout accuracy against REAL compilers on every platform.
+# Generates compiler truth files and runs the oracle comparison tests.
+on:
+  push:
+  pull_request:
+jobs:
+  truth:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            install: sudo apt-get update && sudo apt-get install -y clang g++
+          - os: macos-latest
+            install: echo "clang ships with Xcode CLT"
+          - os: windows-latest
+            install: choco install llvm -y
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: ${{ matrix.install }}
+      - run: npm install --no-audit --no-fund
+      - run: npm run build -w @memlens/protocol && npm run build -w @memlens/analysis
+      - name: generate compiler truth
+        run: node scripts/gen-layout-truth.mjs --force && git status --porcelain fixtures/truth/
+      - name: oracle tests (fallback subset + refusals + clang exact-match)
+        run: npm run test -w @memlens/analysis
+      - name: fallback accuracy report
+        run: node scripts/check-fallback-accuracy.mjs

@@ -1,0 +1,19 @@
+{
+  "name": "@memlens/protocol",
+  "version": "1.4.0",
+  "description": "MemLens frozen shared data contract (Phase 0). Any change requires ADR + minor/major bump.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node dist/selftest.test.js",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

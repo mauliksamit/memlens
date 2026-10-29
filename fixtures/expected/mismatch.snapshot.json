@@ -1,0 +1,147 @@
+{
+  "id": "golden",
+  "uri": "file:///fixtures/mismatch.cpp",
+  "docVersion": 1,
+  "fidelity": "static",
+  "regions": [
+    {
+      "kind": "stack",
+      "label": "stack: main()",
+      "blocks": [
+        {
+          "id": "stack:mismatch.cpp:2:a",
+          "name": "a",
+          "type": "int *",
+          "sizeBytes": 8,
+          "sourceRange": {
+            "uri": "file:///fixtures/mismatch.cpp",
+            "startLine": 1,
+            "startCol": 7,
+            "endLine": 1,
+            "endCol": 8
+          },
+          "lifetime": {
+            "start": "main:2",
+            "end": "main:7",
+            "scopeBound": false
+          },
+          "confidence": 0.85,
+          "fidelity": "static",
+          "pointsTo": [
+            {
+              "targetId": "heap:mismatch.cpp:2:a",
+              "label": "owns",
+              "kind": "owns",
+              "confidence": "inferred",
+              "source": "heuristic"
+            }
+          ]
+        },
+        {
+          "id": "stack:mismatch.cpp:4:b",
+          "name": "b",
+          "type": "int *",
+          "sizeBytes": 8,
+          "sourceRange": {
+            "uri": "file:///fixtures/mismatch.cpp",
+            "startLine": 3,
+            "startCol": 7,
+            "endLine": 3,
+            "endCol": 8
+          },
+          "lifetime": {
+            "start": "main:4",
+            "end": "main:7",
+            "scopeBound": false
+          },
+          "confidence": 0.85,
+          "fidelity": "static",
+          "pointsTo": [
+            {
+              "targetId": "heap:mismatch.cpp:4:b",
+              "label": "owns",
+              "kind": "owns",
+              "confidence": "inferred",
+              "source": "heuristic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "heap",
+      "label": "heap",
+      "blocks": [
+        {
+          "id": "heap:mismatch.cpp:2:a",
+          "name": "a (new int[5])",
+          "type": "int[5]",
+          "sizeBytes": 20,
+          "sourceRange": {
+            "uri": "file:///fixtures/mismatch.cpp",
+            "startLine": 1,
+            "startCol": 11,
+            "endLine": 1,
+            "endCol": 14
+          },
+          "lifetime": {
+            "start": "main:2",
+            "scopeBound": false
+          },
+          "confidence": 0.8,
+          "fidelity": "static"
+        },
+        {
+          "id": "heap:mismatch.cpp:4:b",
+          "name": "b (new int)",
+          "type": "int",
+          "sizeBytes": 4,
+          "sourceRange": {
+            "uri": "file:///fixtures/mismatch.cpp",
+            "startLine": 3,
+            "startCol": 11,
+            "endLine": 3,
+            "endCol": 14
+          },
+          "lifetime": {
+            "start": "main:4",
+            "scopeBound": false
+          },
+          "confidence": 0.85,
+          "fidelity": "static"
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "kind": "mismatched-delete",
+      "severity": "error",
+      "sourceRange": {
+        "uri": "file:///fixtures/mismatch.cpp",
+        "startLine": 2,
+        "startCol": 2,
+        "endLine": 2,
+        "endCol": 8
+      },
+      "message": "mismatched new[]/delete for 'a'",
+      "blockId": "heap:mismatch.cpp:2:a"
+    },
+    {
+      "kind": "mismatched-delete",
+      "severity": "error",
+      "sourceRange": {
+        "uri": "file:///fixtures/mismatch.cpp",
+        "startLine": 4,
+        "startCol": 2,
+        "endLine": 4,
+        "endCol": 8
+      },
+      "message": "mismatched new/delete[] for 'b'",
+      "blockId": "heap:mismatch.cpp:4:b"
+    }
+  ],
+  "records": [],
+  "layoutAccurate": true,
+  "timestamp": 0
+}

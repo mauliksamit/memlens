@@ -1,0 +1,23 @@
+{
+  "name": "@memlens/analysis",
+  "version": "0.1.0",
+  "description": "MemLens static analysis worker: tolerant parse + model builder + clang layout provider",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test \"dist/analysis.test.js\" \"dist/fixtures.test.js\" \"dist/layout.test.js\" \"dist/layout-truth.test.js\"",
+    "gen-goldens": "npm run build && node dist/gen-goldens.js",
+    "bench": "npm run build && node dist/bench.js"
+  },
+  "dependencies": {
+    "@memlens/protocol": "1.4.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

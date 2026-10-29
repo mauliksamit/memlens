@@ -1,0 +1,13 @@
+# Sources and build tooling
+src/**
+test/**
+out-test/**
+scripts/**
+tsconfig*.json
+**/*.map
+**/*.ts
+*.vsix
+node_modules/**
+# Keep only the PNG icon from resources
+resources/**
+!resources/icon.png

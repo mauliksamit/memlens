@@ -1,0 +1,108 @@
+{
+  "id": "golden",
+  "uri": "file:///fixtures/broken.cpp",
+  "docVersion": 1,
+  "fidelity": "static",
+  "regions": [
+    {
+      "kind": "stack",
+      "label": "stack: main()",
+      "blocks": [
+        {
+          "id": "stack:broken.cpp:2:x",
+          "name": "x",
+          "type": "int",
+          "sizeBytes": 4,
+          "sourceRange": {
+            "uri": "file:///fixtures/broken.cpp",
+            "startLine": 1,
+            "startCol": 6,
+            "endLine": 1,
+            "endCol": 7
+          },
+          "lifetime": {
+            "start": "main:2",
+            "end": "main:6",
+            "scopeBound": true
+          },
+          "confidence": 0.85,
+          "fidelity": "static"
+        },
+        {
+          "id": "stack:broken.cpp:3:p",
+          "name": "p",
+          "type": "int *",
+          "sizeBytes": 8,
+          "sourceRange": {
+            "uri": "file:///fixtures/broken.cpp",
+            "startLine": 2,
+            "startCol": 7,
+            "endLine": 2,
+            "endCol": 8
+          },
+          "lifetime": {
+            "start": "main:3",
+            "end": "main:6",
+            "scopeBound": false
+          },
+          "confidence": 0.85,
+          "fidelity": "static",
+          "pointsTo": [
+            {
+              "targetId": "heap:broken.cpp:3:p",
+              "label": "owns",
+              "kind": "owns",
+              "confidence": "inferred",
+              "source": "heuristic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "heap",
+      "label": "heap",
+      "blocks": [
+        {
+          "id": "heap:broken.cpp:3:p",
+          "name": "p (new int[10])",
+          "type": "int[10]",
+          "sizeBytes": 40,
+          "sourceRange": {
+            "uri": "file:///fixtures/broken.cpp",
+            "startLine": 2,
+            "startCol": 11,
+            "endLine": 2,
+            "endCol": 14
+          },
+          "lifetime": {
+            "start": "main:3",
+            "scopeBound": false
+          },
+          "confidence": 0.8,
+          "fidelity": "static"
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "kind": "leak",
+      "severity": "warning",
+      "sourceRange": {
+        "uri": "file:///fixtures/broken.cpp",
+        "startLine": 2,
+        "startCol": 11,
+        "endLine": 2,
+        "endCol": 14
+      },
+      "message": "possible leak: 'p' allocated here (new int[10]) is never freed on this path",
+      "blockId": "heap:broken.cpp:3:p"
+    }
+  ],
+  "records": [],
+  "layoutAccurate": true,
+  "timestamp": 0,
+  "stale": true,
+  "note": "unbalanced braces (depth 1 at EOF)"
+}

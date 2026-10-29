@@ -1,0 +1,134 @@
+{
+  "id": "golden",
+  "uri": "file:///fixtures/alias.cpp",
+  "docVersion": 1,
+  "fidelity": "static",
+  "regions": [
+    {
+      "kind": "stack",
+      "label": "stack: main()",
+      "blocks": [
+        {
+          "id": "stack:alias.cpp:2:a",
+          "name": "a",
+          "type": "int *",
+          "sizeBytes": 8,
+          "sourceRange": {
+            "uri": "file:///fixtures/alias.cpp",
+            "startLine": 1,
+            "startCol": 7,
+            "endLine": 1,
+            "endCol": 8
+          },
+          "lifetime": {
+            "start": "main:2",
+            "end": "main:10",
+            "scopeBound": false
+          },
+          "confidence": 0.85,
+          "fidelity": "static",
+          "pointsTo": [
+            {
+              "targetId": "heap:alias.cpp:2:a",
+              "label": "owns",
+              "kind": "owns",
+              "confidence": "inferred",
+              "source": "heuristic"
+            }
+          ]
+        },
+        {
+          "id": "stack:alias.cpp:3:b",
+          "name": "b",
+          "type": "int *",
+          "sizeBytes": 8,
+          "sourceRange": {
+            "uri": "file:///fixtures/alias.cpp",
+            "startLine": 2,
+            "startCol": 7,
+            "endLine": 2,
+            "endCol": 8
+          },
+          "lifetime": {
+            "start": "main:3",
+            "end": "main:10",
+            "scopeBound": false
+          },
+          "confidence": 0.85,
+          "fidelity": "static",
+          "pointsTo": [
+            {
+              "targetId": "heap:alias.cpp:2:a",
+              "label": "points to",
+              "kind": "points-to",
+              "confidence": "inferred",
+              "source": "heuristic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "heap",
+      "label": "heap",
+      "blocks": [
+        {
+          "id": "heap:alias.cpp:2:a",
+          "name": "a (new int[5])",
+          "type": "int[5]",
+          "sizeBytes": 20,
+          "sourceRange": {
+            "uri": "file:///fixtures/alias.cpp",
+            "startLine": 1,
+            "startCol": 11,
+            "endLine": 1,
+            "endCol": 14
+          },
+          "lifetime": {
+            "start": "main:2",
+            "scopeBound": false
+          },
+          "confidence": 0.8,
+          "fidelity": "static"
+        },
+        {
+          "id": "heap:alias.cpp:3:b",
+          "name": "b (new int)",
+          "type": "int",
+          "sizeBytes": 4,
+          "sourceRange": {
+            "uri": "file:///fixtures/alias.cpp",
+            "startLine": 2,
+            "startCol": 11,
+            "endLine": 2,
+            "endCol": 14
+          },
+          "lifetime": {
+            "start": "main:3",
+            "scopeBound": false
+          },
+          "confidence": 0.85,
+          "fidelity": "static"
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "kind": "leak",
+      "severity": "warning",
+      "sourceRange": {
+        "uri": "file:///fixtures/alias.cpp",
+        "startLine": 2,
+        "startCol": 11,
+        "endLine": 2,
+        "endCol": 14
+      },
+      "message": "possible leak: 'b' (new int) is overwritten on line 4 before being freed",
+      "blockId": "heap:alias.cpp:3:b"
+    }
+  ],
+  "records": [],
+  "layoutAccurate": true,
+  "timestamp": 0
+}

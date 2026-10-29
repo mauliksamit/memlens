@@ -1,0 +1,310 @@
+{
+  "name": "memlens",
+  "displayName": "MemLens: Memory Layout Visualizer",
+  "description": "See where your C and C++ variables live, how big they are and how structs are padded, live as you type. Flags leaks, double frees and mismatched deletes, and shows real addresses while debugging.",
+  "version": "0.2.0",
+  "publisher": "mauliksamit",
+  "license": "MIT",
+  "icon": "resources/icon.png",
+  "galleryBanner": {
+    "color": "#1b2633",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mauliksamit/memlens"
+  },
+  "bugs": {
+    "url": "https://github.com/mauliksamit/memlens/issues"
+  },
+  "homepage": "https://github.com/mauliksamit/memlens#readme",
+  "keywords": [
+    "c++",
+    "cpp",
+    "c",
+    "memory",
+    "struct padding",
+    "sizeof",
+    "heap",
+    "stack",
+    "memory leak",
+    "layout",
+    "visualizer",
+    "pointers"
+  ],
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Visualization",
+    "Debuggers",
+    "Linters",
+    "Education"
+  ],
+  "activationEvents": [
+    "onLanguage:cpp",
+    "onLanguage:c",
+    "onWebviewPanel:memlens.memoryView"
+  ],
+  "main": "./out/extension.js",
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "Static analysis works in Restricted Mode. A custom layout compiler and extra flags require a trusted workspace.",
+      "restrictedConfigurations": [
+        "memlens.compilerPath",
+        "memlens.extraFlags"
+      ]
+    },
+    "virtualWorkspaces": {
+      "supported": false,
+      "description": "MemLens needs files on disk to run the layout compiler."
+    }
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "memlens.openView",
+        "title": "Open Memory View",
+        "category": "MemLens",
+        "icon": "$(symbol-structure)"
+      },
+      {
+        "command": "memlens.revealAtLine",
+        "title": "Show Symbol at Cursor in Memory View",
+        "category": "MemLens",
+        "icon": "$(target)"
+      },
+      {
+        "command": "memlens.clearHistory",
+        "title": "Clear History",
+        "category": "MemLens",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "memlens.showLog",
+        "title": "Show Log",
+        "category": "MemLens",
+        "icon": "$(output)"
+      },
+      {
+        "command": "memlens.reorderFields",
+        "title": "Reorder Struct Fields to Remove Padding",
+        "category": "MemLens"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "memlens.openView",
+          "when": "editorLangId == cpp || editorLangId == c",
+          "group": "navigation@90"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "memlens.revealAtLine",
+          "when": "editorLangId == cpp || editorLangId == c",
+          "group": "navigation@90"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "memlens.revealAtLine",
+          "when": "editorLangId == cpp || editorLangId == c"
+        },
+        {
+          "command": "memlens.reorderFields",
+          "when": "false"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "memlens.openView",
+        "key": "ctrl+alt+m",
+        "mac": "cmd+alt+m",
+        "when": "editorTextFocus && (editorLangId == cpp || editorLangId == c)"
+      }
+    ],
+    "configuration": {
+      "title": "MemLens",
+      "properties": {
+        "memlens.compilerPath": {
+          "type": "string",
+          "default": "",
+          "order": 1,
+          "scope": "machine-overridable",
+          "markdownDescription": "Path to a `clang` binary used for **exact** struct layouts (`-fdump-record-layouts`). Leave empty to use `clang` from `PATH`. Without a compiler, MemLens estimates layouts from a built-in size table and labels them *estimated*."
+        },
+        "memlens.extraFlags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "order": 2,
+          "markdownDescription": "Extra compiler flags for layout extraction, for example `[\"-std=c++20\", \"-Iinclude\"]`. When empty, flags come from `compile_commands.json` if one is found."
+        },
+        "memlens.diagnostics.enabled": {
+          "type": "boolean",
+          "default": true,
+          "order": 10,
+          "markdownDescription": "Show MemLens findings (possible leaks, double frees, mismatched `delete`, dangling references, padding) as squiggles and in the Problems panel."
+        },
+        "memlens.diagnostics.minSeverity": {
+          "type": "string",
+          "enum": [
+            "error",
+            "warning",
+            "info"
+          ],
+          "enumDescriptions": [
+            "Only definite mistakes (double free, mismatched delete)",
+            "Also possible leaks, use-after-free and dangling references",
+            "Everything, including padding hints"
+          ],
+          "default": "info",
+          "order": 11,
+          "description": "Lowest severity reported in the Problems panel."
+        },
+        "memlens.codeLens.enabled": {
+          "type": "boolean",
+          "default": true,
+          "order": 12,
+          "markdownDescription": "Show `sizeof` and padding above each struct, class and union, with a one-click fix when reordering fields would shrink it."
+        },
+        "memlens.hover.enabled": {
+          "type": "boolean",
+          "default": true,
+          "order": 13,
+          "description": "Show size, lifetime and field layout when hovering a variable or type."
+        },
+        "memlens.followCursor": {
+          "type": "boolean",
+          "default": true,
+          "order": 20,
+          "description": "Select the block under the editor cursor in the memory view."
+        },
+        "memlens.preferDebuggerSnapshots": {
+          "type": "boolean",
+          "default": true,
+          "order": 21,
+          "markdownDescription": "While a C or C++ debug session is paused, show the live frame (real addresses and pointer targets) in the memory view. Works with the Microsoft C++ debugger (`cppdbg`, `cppvsdbg`) and CodeLLDB."
+        },
+        "memlens.themePalette": {
+          "type": "string",
+          "enum": [
+            "colorblind-safe",
+            "default",
+            "high-contrast"
+          ],
+          "enumDescriptions": [
+            "Okabe–Ito colours, readable with common colour-vision deficiencies",
+            "Bright blue, orange and purple",
+            "Maximum contrast for high-contrast themes"
+          ],
+          "default": "colorblind-safe",
+          "order": 22,
+          "description": "Colours used for stack, heap and global regions in the memory view."
+        },
+        "memlens.debounceMs": {
+          "type": "number",
+          "default": 300,
+          "minimum": 50,
+          "maximum": 2000,
+          "order": 30,
+          "description": "Delay in milliseconds after you stop typing before the file is re-analyzed."
+        },
+        "memlens.historyLength": {
+          "type": "number",
+          "default": 50,
+          "minimum": 5,
+          "maximum": 500,
+          "order": 31,
+          "description": "Number of snapshots kept per file for the history scrubber."
+        }
+      }
+    },
+    "walkthroughs": [
+      {
+        "id": "memlens.gettingStarted",
+        "title": "Get started with MemLens",
+        "description": "See memory layout and lifetime problems in your C and C++ code as you type.",
+        "steps": [
+          {
+            "id": "open",
+            "title": "Open the memory view",
+            "description": "Open any C or C++ file, then click the MemLens icon in the editor title bar (or press Ctrl+Alt+M).\n[Open Memory View](command:memlens.openView)",
+            "media": {
+              "markdown": "media/walkthrough/open.md"
+            },
+            "completionEvents": [
+              "onCommand:memlens.openView"
+            ]
+          },
+          {
+            "id": "padding",
+            "title": "Shrink a struct",
+            "description": "Look for the sizeof / padding line above each struct. When reordering would save bytes, click it or use the quick fix (Ctrl+.).",
+            "media": {
+              "markdown": "media/walkthrough/padding.md"
+            }
+          },
+          {
+            "id": "problems",
+            "title": "Catch lifetime bugs",
+            "description": "Possible leaks, double frees, mismatched new[]/delete and dangling references appear as squiggles and in the Problems panel.\n[Open Problems](command:workbench.actions.view.problems)",
+            "media": {
+              "markdown": "media/walkthrough/problems.md"
+            },
+            "completionEvents": [
+              "onCommand:workbench.actions.view.problems"
+            ]
+          },
+          {
+            "id": "debug",
+            "title": "See the live frame while debugging",
+            "description": "Start a C or C++ debug session and pause at a breakpoint. MemLens switches to the live frame with real addresses and pointer targets.",
+            "media": {
+              "markdown": "media/walkthrough/debug.md"
+            }
+          },
+          {
+            "id": "compiler",
+            "title": "Optional: exact layouts with clang",
+            "description": "Without a compiler MemLens estimates layouts. Point it at clang for compiler-verified offsets.\n[Set Compiler Path](command:workbench.action.openSettings?%22memlens.compilerPath%22)",
+            "media": {
+              "markdown": "media/walkthrough/compiler.md"
+            },
+            "completionEvents": [
+              "onSettingChanged:memlens.compilerPath"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "build": "esbuild src/extension.ts --bundle --platform=node --format=cjs --external:vscode --outfile=out/extension.js --sourcemap && esbuild ../analysis/dist/index.js --bundle --platform=node --format=cjs --outfile=out/analysis.worker.js --sourcemap && npm run build:webview-res",
+    "build:release": "esbuild src/extension.ts --bundle --platform=node --format=cjs --external:vscode --outfile=out/extension.js && esbuild ../analysis/dist/index.js --bundle --platform=node --format=cjs --outfile=out/analysis.worker.js && npm run build:webview-res",
+    "build:webview-res": "node scripts/copy-webview.mjs",
+    "build:icon": "node scripts/make-icon.mjs",
+    "compile": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run test:build && npm run compile && node --test \"out-test/test/extension.test.js\"",
+    "test:build": "tsc -p tsconfig.test.json",
+    "copy-docs": "node scripts/copy-docs.mjs",
+    "package": "npm run copy-docs && npx @vscode/vsce package --no-dependencies",
+    "vscode:prepublish": "npm run build:release"
+  },
+  "devDependencies": {
+    "@memlens/analysis": "0.1.0",
+    "@memlens/debugger": "0.1.0",
+    "@memlens/protocol": "1.4.0",
+    "@types/node": "*",
+    "@types/vscode": "^1.90.0",
+    "@vscode/vsce": "^4.0.0",
+    "esbuild": "^0.28.2",
+    "typescript": "^5.6.3"
+  }
+}

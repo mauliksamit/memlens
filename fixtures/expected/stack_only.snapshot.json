@@ -1,0 +1,149 @@
+{
+  "id": "golden",
+  "uri": "file:///fixtures/stack_only.cpp",
+  "docVersion": 1,
+  "fidelity": "static",
+  "regions": [
+    {
+      "kind": "stack",
+      "label": "stack: helper()",
+      "blocks": [
+        {
+          "id": "stack:stack_only.cpp:2:t",
+          "name": "t",
+          "type": "int",
+          "sizeBytes": 4,
+          "sourceRange": {
+            "uri": "file:///fixtures/stack_only.cpp",
+            "startLine": 1,
+            "startCol": 4,
+            "endLine": 1,
+            "endCol": 5
+          },
+          "lifetime": {
+            "start": "helper:2",
+            "end": "helper:4",
+            "scopeBound": true
+          },
+          "confidence": 0.85,
+          "fidelity": "static"
+        }
+      ]
+    },
+    {
+      "kind": "stack",
+      "label": "stack: main()",
+      "blocks": [
+        {
+          "id": "stack:stack_only.cpp:9:x",
+          "name": "x",
+          "type": "int",
+          "sizeBytes": 4,
+          "sourceRange": {
+            "uri": "file:///fixtures/stack_only.cpp",
+            "startLine": 8,
+            "startCol": 6,
+            "endLine": 8,
+            "endCol": 7
+          },
+          "lifetime": {
+            "start": "main:9",
+            "end": "main:14",
+            "scopeBound": true
+          },
+          "confidence": 0.85,
+          "fidelity": "static"
+        },
+        {
+          "id": "stack:stack_only.cpp:10:y",
+          "name": "y",
+          "type": "double",
+          "sizeBytes": 8,
+          "sourceRange": {
+            "uri": "file:///fixtures/stack_only.cpp",
+            "startLine": 9,
+            "startCol": 9,
+            "endLine": 9,
+            "endCol": 10
+          },
+          "lifetime": {
+            "start": "main:10",
+            "end": "main:14",
+            "scopeBound": true
+          },
+          "confidence": 0.85,
+          "fidelity": "static"
+        },
+        {
+          "id": "stack:stack_only.cpp:11:arr",
+          "name": "arr",
+          "type": "int[4]",
+          "sizeBytes": 16,
+          "sourceRange": {
+            "uri": "file:///fixtures/stack_only.cpp",
+            "startLine": 10,
+            "startCol": 6,
+            "endLine": 10,
+            "endCol": 9
+          },
+          "lifetime": {
+            "start": "main:11",
+            "end": "main:14",
+            "scopeBound": true
+          },
+          "confidence": 0.85,
+          "fidelity": "static"
+        },
+        {
+          "id": "stack:stack_only.cpp:12:c",
+          "name": "c",
+          "type": "char",
+          "sizeBytes": 1,
+          "sourceRange": {
+            "uri": "file:///fixtures/stack_only.cpp",
+            "startLine": 11,
+            "startCol": 2,
+            "endLine": 11,
+            "endCol": 3
+          },
+          "lifetime": {
+            "start": "main:12",
+            "end": "main:14",
+            "scopeBound": true
+          },
+          "confidence": 0.85,
+          "fidelity": "static"
+        }
+      ]
+    },
+    {
+      "kind": "global",
+      "label": "globals",
+      "blocks": [
+        {
+          "id": "global:stack_only.cpp:6:g_counter",
+          "name": "g_counter",
+          "type": "int",
+          "sizeBytes": 4,
+          "sourceRange": {
+            "uri": "file:///fixtures/stack_only.cpp",
+            "startLine": 5,
+            "startCol": 4,
+            "endLine": 5,
+            "endCol": 13
+          },
+          "lifetime": {
+            "start": "global",
+            "scopeBound": false
+          },
+          "confidence": 0.85,
+          "fidelity": "static"
+        }
+      ]
+    }
+  ],
+  "issues": [],
+  "records": [],
+  "layoutAccurate": true,
+  "timestamp": 0
+}

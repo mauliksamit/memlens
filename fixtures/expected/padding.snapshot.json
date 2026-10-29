@@ -1,0 +1,159 @@
+{
+  "id": "golden",
+  "uri": "file:///fixtures/padding.cpp",
+  "docVersion": 1,
+  "fidelity": "static",
+  "regions": [
+    {
+      "kind": "stack",
+      "label": "stack: main()",
+      "blocks": [
+        {
+          "id": "stack:padding.cpp:9:p",
+          "name": "p",
+          "type": "Padded",
+          "sizeBytes": 24,
+          "sourceRange": {
+            "uri": "file:///fixtures/padding.cpp",
+            "startLine": 8,
+            "startCol": 9,
+            "endLine": 8,
+            "endCol": 10
+          },
+          "lifetime": {
+            "start": "main:9",
+            "end": "main:11",
+            "scopeBound": true
+          },
+          "layout": [
+            {
+              "name": "a",
+              "type": "char",
+              "offset": 0,
+              "size": 1,
+              "align": 1,
+              "paddingAfter": 7
+            },
+            {
+              "name": "d",
+              "type": "double",
+              "offset": 8,
+              "size": 8,
+              "align": 8,
+              "paddingAfter": 0
+            },
+            {
+              "name": "b",
+              "type": "char",
+              "offset": 16,
+              "size": 1,
+              "align": 1,
+              "paddingAfter": 3
+            },
+            {
+              "name": "c",
+              "type": "int",
+              "offset": 20,
+              "size": 4,
+              "align": 4,
+              "paddingAfter": 0
+            }
+          ],
+          "totalSizeBytes": 24,
+          "layoutSource": "fallback",
+          "confidence": 0.6,
+          "fidelity": "static"
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "kind": "large-padding",
+      "severity": "info",
+      "sourceRange": {
+        "uri": "file:///fixtures/padding.cpp",
+        "startLine": 0,
+        "startCol": 0,
+        "endLine": 0,
+        "endCol": 6
+      },
+      "message": "struct Padded: 10 padding bytes in 24 total — consider reordering fields"
+    }
+  ],
+  "records": [
+    {
+      "name": "Padded",
+      "kind": "struct",
+      "sourceRange": {
+        "uri": "file:///fixtures/padding.cpp",
+        "startLine": 0,
+        "startCol": 0,
+        "endLine": 0,
+        "endCol": 0
+      },
+      "endLine": 5,
+      "fields": [
+        {
+          "name": "a",
+          "type": "char",
+          "line": 1
+        },
+        {
+          "name": "d",
+          "type": "double",
+          "line": 2
+        },
+        {
+          "name": "b",
+          "type": "char",
+          "line": 3
+        },
+        {
+          "name": "c",
+          "type": "int",
+          "line": 4
+        }
+      ],
+      "layout": [
+        {
+          "name": "a",
+          "type": "char",
+          "offset": 0,
+          "size": 1,
+          "align": 1,
+          "paddingAfter": 7
+        },
+        {
+          "name": "d",
+          "type": "double",
+          "offset": 8,
+          "size": 8,
+          "align": 8,
+          "paddingAfter": 0
+        },
+        {
+          "name": "b",
+          "type": "char",
+          "offset": 16,
+          "size": 1,
+          "align": 1,
+          "paddingAfter": 3
+        },
+        {
+          "name": "c",
+          "type": "int",
+          "offset": 20,
+          "size": 4,
+          "align": 4,
+          "paddingAfter": 0
+        }
+      ],
+      "totalSizeBytes": 24,
+      "align": 8,
+      "layoutSource": "fallback"
+    }
+  ],
+  "layoutAccurate": false,
+  "timestamp": 0
+}

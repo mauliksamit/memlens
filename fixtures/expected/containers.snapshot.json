@@ -1,0 +1,160 @@
+{
+  "id": "golden",
+  "uri": "file:///fixtures/containers.cpp",
+  "docVersion": 1,
+  "fidelity": "static",
+  "regions": [
+    {
+      "kind": "stack",
+      "label": "stack: main()",
+      "blocks": [
+        {
+          "id": "stack:containers.cpp:6:v",
+          "name": "v",
+          "type": "std::vector<int>",
+          "sizeBytes": 24,
+          "sourceRange": {
+            "uri": "file:///fixtures/containers.cpp",
+            "startLine": 5,
+            "startCol": 7,
+            "endLine": 5,
+            "endCol": 8
+          },
+          "lifetime": {
+            "start": "main:6",
+            "end": "main:11",
+            "scopeBound": true
+          },
+          "confidence": 0.6,
+          "fidelity": "static"
+        },
+        {
+          "id": "stack:containers.cpp:7:s",
+          "name": "s",
+          "type": "std::string",
+          "sizeBytes": 32,
+          "sourceRange": {
+            "uri": "file:///fixtures/containers.cpp",
+            "startLine": 6,
+            "startCol": 2,
+            "endLine": 6,
+            "endCol": 3
+          },
+          "lifetime": {
+            "start": "main:7",
+            "end": "main:11",
+            "scopeBound": true
+          },
+          "confidence": 0.6,
+          "fidelity": "static"
+        },
+        {
+          "id": "stack:containers.cpp:8:p",
+          "name": "p",
+          "type": "std::unique_ptr<int>",
+          "sizeBytes": 8,
+          "sourceRange": {
+            "uri": "file:///fixtures/containers.cpp",
+            "startLine": 7,
+            "startCol": 7,
+            "endLine": 7,
+            "endCol": 8
+          },
+          "lifetime": {
+            "start": "main:8",
+            "end": "main:11",
+            "scopeBound": true
+          },
+          "confidence": 0.85,
+          "fidelity": "static",
+          "pointsTo": [
+            {
+              "targetId": "heap:containers.cpp:8:p",
+              "label": "owns",
+              "kind": "owns",
+              "confidence": "inferred",
+              "source": "heuristic"
+            }
+          ]
+        },
+        {
+          "id": "stack:containers.cpp:9:q",
+          "name": "q",
+          "type": "std::shared_ptr<int>",
+          "sizeBytes": 16,
+          "sourceRange": {
+            "uri": "file:///fixtures/containers.cpp",
+            "startLine": 8,
+            "startCol": 7,
+            "endLine": 8,
+            "endCol": 8
+          },
+          "lifetime": {
+            "start": "main:9",
+            "end": "main:11",
+            "scopeBound": true
+          },
+          "confidence": 0.85,
+          "fidelity": "static",
+          "pointsTo": [
+            {
+              "targetId": "heap:containers.cpp:9:q",
+              "label": "owns",
+              "kind": "owns",
+              "confidence": "inferred",
+              "source": "heuristic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "heap",
+      "label": "heap",
+      "blocks": [
+        {
+          "id": "heap:containers.cpp:8:p",
+          "name": "p (make_unique<int>)",
+          "type": "int",
+          "sizeBytes": 4,
+          "sourceRange": {
+            "uri": "file:///fixtures/containers.cpp",
+            "startLine": 7,
+            "startCol": 0,
+            "endLine": 7,
+            "endCol": 3
+          },
+          "lifetime": {
+            "start": "main:8",
+            "scopeBound": true
+          },
+          "confidence": 0.85,
+          "fidelity": "static"
+        },
+        {
+          "id": "heap:containers.cpp:9:q",
+          "name": "q (make_shared<int>)",
+          "type": "int",
+          "sizeBytes": 4,
+          "sourceRange": {
+            "uri": "file:///fixtures/containers.cpp",
+            "startLine": 8,
+            "startCol": 0,
+            "endLine": 8,
+            "endCol": 3
+          },
+          "lifetime": {
+            "start": "main:9",
+            "scopeBound": true
+          },
+          "confidence": 0.85,
+          "fidelity": "static"
+        }
+      ]
+    }
+  ],
+  "issues": [],
+  "records": [],
+  "layoutAccurate": true,
+  "timestamp": 0
+}

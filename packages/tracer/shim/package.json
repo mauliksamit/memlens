@@ -1,0 +1,8 @@
+{
+  "name": "memlens-shim",
+  "version": "0.1.0",
+  "description": "LD_PRELOAD allocator shim build (memlens tracer)",
+  "scripts": {
+    "build": "g++ -shared -fPIC -o libmemlens_shim.so shim.cpp -ldl -rdynamic"
+  }
+}

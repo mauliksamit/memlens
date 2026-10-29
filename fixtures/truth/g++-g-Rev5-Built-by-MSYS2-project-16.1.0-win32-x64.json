@@ -1,0 +1,246 @@
+{
+  "abi": {
+    "pointer": 8,
+    "long": 4,
+    "long_double": 16,
+    "have_no_unique_address": 1,
+    "stdlib": "libstdc++ 16",
+    "compiler": "gcc 16.1.0"
+  },
+  "P_Plain": {
+    "sizeof": 8,
+    "align": 4,
+    "a": {
+      "offset": 0,
+      "size": 4
+    },
+    "b": {
+      "offset": 4,
+      "size": 1
+    }
+  },
+  "P_Reordered": {
+    "sizeof": 24,
+    "align": 8,
+    "a": {
+      "offset": 0,
+      "size": 1
+    },
+    "d": {
+      "offset": 8,
+      "size": 8
+    },
+    "b": {
+      "offset": 16,
+      "size": 1
+    }
+  },
+  "P_ReorderedOpt": {
+    "sizeof": 16,
+    "align": 8,
+    "d": {
+      "offset": 0,
+      "size": 8
+    },
+    "a": {
+      "offset": 8,
+      "size": 1
+    },
+    "b": {
+      "offset": 9,
+      "size": 1
+    }
+  },
+  "P_AlignAs": {
+    "sizeof": 16,
+    "align": 16,
+    "c": {
+      "offset": 0,
+      "size": 1
+    },
+    "x": {
+      "offset": 4,
+      "size": 4
+    }
+  },
+  "P_Packed": {
+    "sizeof": 13,
+    "align": 1,
+    "a": {
+      "offset": 0,
+      "size": 1
+    },
+    "b": {
+      "offset": 1,
+      "size": 4
+    },
+    "c": {
+      "offset": 5,
+      "size": 8
+    }
+  },
+  "P_Bits": {
+    "sizeof": 4,
+    "align": 4
+  },
+  "P_Empty": {
+    "sizeof": 1,
+    "align": 1
+  },
+  "P_Ebo": {
+    "sizeof": 4,
+    "align": 4,
+    "x": {
+      "offset": 0,
+      "size": 4
+    }
+  },
+  "P_NoEbo": {
+    "sizeof": 8,
+    "align": 4,
+    "e": {
+      "offset": 0,
+      "size": 1
+    },
+    "x": {
+      "offset": 4,
+      "size": 4
+    }
+  },
+  "P_Base": {
+    "sizeof": 4,
+    "align": 4,
+    "x": {
+      "offset": 0,
+      "size": 4
+    }
+  },
+  "P_Single": {
+    "sizeof": 24,
+    "align": 8,
+    "y": {
+      "offset": 8,
+      "size": 8
+    },
+    "tag": {
+      "offset": 16,
+      "size": 1
+    }
+  },
+  "P_B1": {
+    "sizeof": 4,
+    "align": 4,
+    "a": {
+      "offset": 0,
+      "size": 4
+    }
+  },
+  "P_B2": {
+    "sizeof": 8,
+    "align": 8,
+    "b": {
+      "offset": 0,
+      "size": 8
+    }
+  },
+  "P_Multi": {
+    "sizeof": 24,
+    "align": 8,
+    "c": {
+      "offset": 16,
+      "size": 1
+    }
+  },
+  "P_Virt": {
+    "sizeof": 16,
+    "align": 8,
+    "x": {
+      "offset": 8,
+      "size": 4
+    }
+  },
+  "P_VBase": {
+    "sizeof": 4,
+    "align": 4,
+    "v": {
+      "offset": 0,
+      "size": 4
+    }
+  },
+  "P_Virtual": {
+    "sizeof": 16,
+    "align": 8,
+    "y": {
+      "offset": 8,
+      "size": 4
+    }
+  },
+  "P_Union": {
+    "sizeof": 16,
+    "align": 8,
+    "i": {
+      "offset": 0,
+      "size": 4
+    },
+    "d": {
+      "offset": 0,
+      "size": 8
+    },
+    "s": {
+      "offset": 0,
+      "size": 16
+    }
+  },
+  "P_Nouaddr": {
+    "sizeof": 4,
+    "align": 4,
+    "x": {
+      "offset": 0,
+      "size": 4
+    }
+  },
+  "P_Nested": {
+    "sizeof": 16,
+    "align": 8,
+    "in": {
+      "offset": 0,
+      "size": 8
+    },
+    "d": {
+      "offset": 8,
+      "size": 8
+    }
+  },
+  "std::string": {
+    "sizeof": 32,
+    "align": 8
+  },
+  "std::vector<int>": {
+    "sizeof": 24,
+    "align": 8
+  },
+  "std::unique_ptr<int>": {
+    "sizeof": 8,
+    "align": 8
+  },
+  "std::shared_ptr<int>": {
+    "sizeof": 16,
+    "align": 8
+  },
+  "std::map<int,int>": {
+    "sizeof": 48,
+    "align": 8
+  },
+  "P_Fund": {
+    "sizeof": 0,
+    "align": 1
+  },
+  "provenance": {
+    "generator": "scripts/gen-layout-truth.mjs",
+    "compilerCommand": "g++",
+    "compilerVersion": "g++ (Rev5, Built by MSYS2 project) 16.1.0",
+    "platform": "win32-x64",
+    "producedBy": "real compiler probe program (scripts/layout-truth/probes.cpp), NOT MemLens",
+    "note": "Oracle for layout tests. Field offsets absent where ill-formed in C++ (bit-fields)."
+  }
+}

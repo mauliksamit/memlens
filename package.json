@@ -1,0 +1,32 @@
+{
+  "name": "memlens-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/protocol",
+    "packages/extension",
+    "packages/analysis",
+    "packages/tracer",
+    "packages/debugger",
+    "packages/webview"
+  ],
+  "scripts": {
+    "build": "npm run build -w @memlens/protocol && npm run build -w @memlens/analysis && npm run build -w @memlens/tracer && npm run build -w @memlens/debugger && npm run build -w @memlens/webview && npm run build -w memlens",
+    "build:protocol": "npm run build -w @memlens/protocol",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "echo \"(lint placeholder: tsc --noEmit per package)\"",
+    "package": "npm run package -w memlens",
+    "bench": "npm run bench -w @memlens/analysis --if-present"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "@types/vscode": "^1.140.0",
+    "esbuild": "^0.28.2",
+    "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": ">=18",
+    "vscode": "^1.90.0"
+  }
+}
